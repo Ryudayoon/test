@@ -1,0 +1,117 @@
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+    </head>
+<canvas id="myChart" width="400" height="400"></canvas>
+<script>
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, "rgba(219, 68, 85, 0.25)");
+    gradient.addColorStop(1, "rgba(219, 68, 85, 0)");
+    var myChart = new Chart(ctx, {
+    type: 'line',
+    plugins:[ChartDataLabels],
+    data: {
+        labels: ['08/08',
+                '08/09',
+                '08/10',
+                '08/11',
+                '08/14',
+                '08/16',
+                '08/17',
+                '08/18',
+                '08/21',
+                '08/22',
+                '08/23',
+                '08/24',
+                '08/25',
+                '08/28',
+                '08/29',
+                '08/30',
+                '08/31',
+                '09/01',
+                '09/04',
+                '09/05',
+                '09/06',
+                '09/07'],
+        datasets: [{
+            label: 'USD/KRW 환율',
+            data: [
+            1304.1,
+            1312.6,
+            1318.3,
+            1317.3,
+            1321.1,
+            1331.3,
+            1338.3,
+            1341.6,
+            1336.9,
+            1341.5,
+            1338.7,
+            1338,
+            1324,
+            1326.6,
+            1322.5,
+            1322,
+            1321.4,
+            1322.3,
+            1319.2,
+            1319.3,
+            1324.3,
+            1332.6
+            ],
+            fill:true,
+            backgroundColor: gradient,
+            borderColor: "rgba(219, 68, 85, 0.4)",
+            lineTension: 0.5,
+            pointRadius: 0
+        }]
+    },
+    options: {
+        responsive : false
+        , scales: {
+            x: { grid: {drawBorder: false, display: false }, ticks: {
+        autoSkip: true,
+        maxTicksLimit: 4}}
+        ,   y: { grid: {drawBorder: false, display:false}, ticks: {display:false}}
+        }
+        ,plugins: {
+            title: {
+                display: true,
+                text: "나의 관심 환율",
+                padding: {
+                    top: 10,
+                    bottom: 30
+                },
+                font: {size: 24}
+            }
+            ,legend: {
+                position:'bottom'
+            }
+            ,datalabels:{
+                    color: 'black',
+                    anchor: 'center',
+                    align: 'end',
+                    formatter: function(value, context) {
+                    // Get the dataset
+                    var dataset = context.chart.data.datasets[context.datasetIndex];
+                    
+                    // Get the minimum and maximum values in the dataset
+                    var min = Math.min(...dataset.data);
+                    var max = Math.max(...dataset.data);
+                    
+                    // Show data label only for minimum and maximum values
+                    if (value === min || value === max) {
+                        return value.toLocaleString();
+                    } else {
+                        return ''; // Empty string to hide the label
+                    }
+                    },
+            }
+        }
+    }
+});
+</script>
+</html>
